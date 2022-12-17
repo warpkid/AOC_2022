@@ -2,22 +2,20 @@ open System.IO
 
 let lines = File.ReadAllLines("day6\data.txt")[0]
 
-// part 1
-// let windowSize = 4
+let windowSizes = [ 4; 14 ]
 
-// part 2
-let windowSize = 14
-
-let isUnique (c: char array) =
-    c |> Seq.distinct |> Seq.length = windowSize
+windowSizes
+|> List.iter (fun windowSize ->
+    let isUnique (c: char array) =
+        c |> Seq.distinct |> Seq.length = windowSize
 
 
-let result =
-    lines
-    |> seq
-    |> Seq.windowed windowSize
-    |> Seq.takeWhile (fun m -> isUnique m |> not)
-    |> Seq.length
-    |> (+) windowSize
+    let result =
+        lines
+        |> seq
+        |> Seq.windowed windowSize
+        |> Seq.takeWhile (fun m -> isUnique m |> not)
+        |> Seq.length
+        |> (+) windowSize
 
-printfn "%i" result
+    printfn "%i" result)

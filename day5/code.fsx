@@ -20,23 +20,12 @@ let getStack position =
 let crates = [ 0..8 ] |> List.map (fun s -> getStack s)
 
 let parseMove (s: string) =
-    let rx = Regex(@"move (?<count>[0-9]*) from (?<source>[0-9]*) to (?<target>[0-9]*)")
+    let rx = Regex(@"move ([0-9]*) from ([0-9]*) to ([0-9]*)")
     let res = rx.Match(s)
 
-    let a =
-        res.Groups
-        |> Seq.find (fun g -> g.Name = "count")
-        |> (fun x -> int x.Value)
-
-    let f =
-        res.Groups
-        |> Seq.find (fun g -> g.Name = "source")
-        |> (fun x -> int x.Value)
-
-    let t =
-        res.Groups
-        |> Seq.find (fun g -> g.Name = "target")
-        |> (fun x -> int x.Value)
+    let a = res.Groups[1].Value |> int
+    let f = res.Groups[2].Value |> int
+    let t = res.Groups[3].Value |> int
 
     { Amount = a; From = f; To = t }
 
